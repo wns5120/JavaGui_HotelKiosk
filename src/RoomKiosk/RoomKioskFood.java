@@ -242,7 +242,7 @@ public class RoomKioskFood extends JFrame {
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
             buttonPanel.setBackground(new Color(255, 220, 200));
 
-            NameButton backButton = new NameButton("메인으로 돌아가기");
+            NameButton backButton = new NameButton("장바구니 확인");
             NameButton confirmButton = new NameButton("주문하기");
 
             backButton.setForeground(Color.WHITE);
@@ -252,7 +252,7 @@ public class RoomKioskFood extends JFrame {
             confirmButton.setFont(new Font("KoPubDotum Bold", Font.BOLD, 12));
             confirmButton.setBackground(new Color(190, 107, 104));
 
-            backButton.addActionListener(e -> goBack());
+            backButton.addActionListener(e -> checkOrder());
             confirmButton.addActionListener(e -> confirmOrder());
 
             buttonPanel.add(backButton);
@@ -353,5 +353,21 @@ public class RoomKioskFood extends JFrame {
         updateCart();
         new RoomKioskFoodFin();
         dispose(); // 현재 창 닫기
+    }
+
+    // 주문 확인 메서드 (장바구니용)
+    private void checkOrder() {
+        StringBuilder message = new StringBuilder("장바구니 목록:\n");
+        Map<String, Integer> choices = new HashMap<>();
+
+        for (String item : cart) {
+            message.append(item).append("\n");
+        }
+
+        for (String item : cart_name) {
+            choices.put(item, 1);
+        }
+        message.append("\n총 가격: ").append(totalPrice).append("원");
+        JOptionPane.showMessageDialog(this, message.toString(), "장바구니", JOptionPane.INFORMATION_MESSAGE);
     }
 }
